@@ -61,7 +61,7 @@ public:
     }
 
 
-    void PlayerBet(int playerIndex, int amount) {
+    void playerBet(int playerIndex, int amount) {
         if(playerIndex >= 0 || playerIndex < m_players.size()){
             m_players[playerIndex].bet(amount);
             m_pot += amount;

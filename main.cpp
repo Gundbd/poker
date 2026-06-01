@@ -8,8 +8,12 @@
 #include "HandEvaluator.hpp"
 #include "Game.hpp"
 #include "Player.hpp"
+#include "OddsCalculator.hpp"
+#include "Example.hpp"
+
 #include "tests/TestDeck.hpp"
 #include "tests/TestHandEvaluator.hpp"
+
 
 using std::string;
 using std::vector;
@@ -20,7 +24,7 @@ int main() {
     
     //testDeck();
     //testHandEvaluator(); 
-
+    /* 
     Game game;
     
     game.addPlayer("Vasya", 5000);
@@ -29,9 +33,9 @@ int main() {
 
     game.startNewRound();
 
-    game.PlayerBet(0, 500);
-    game.PlayerBet(1, 500);
-    game.PlayerBet(2, 500);
+    game.playerBet(0, 500);
+    game.playerBet(1, 500);
+    game.playerBet(2, 500);
 
 
     game.dealFlop();
@@ -75,7 +79,13 @@ int main() {
         });
 
     std::cout << "\n WINNER: " << winnerIt->name; 
+     */
 
+
+
+    //took from example.hpp
+    tryGame();
+    
     return 0;
 }
 

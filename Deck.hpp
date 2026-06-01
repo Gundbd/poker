@@ -3,7 +3,7 @@
 #include <random>
 #include <algorithm>
 #include <stdexcept>
-
+    
 #include "Card.hpp"
 
 using std::vector;
