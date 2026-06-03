@@ -1,0 +1,20 @@
+cmake_minimum_required(VERSION 3.10)
+project(PokerCV)
+
+set(CMAKE_CXX_STANDARD 17)
+
+# Ищем OpenCV
+find_package(OpenCV REQUIRED)
+
+# Создаем исполняемый файл
+add_executable(PokerCV main_cv.cpp)
+
+# Указываем пути к заголовочным файлам (хедерам)
+target_include_directories(PokerCV PRIVATE ${OpenCV_INCLUDE_DIRS})
+
+# Привязываем библиотеки OpenCV через переменную ${OpenCV_LIBS}, а не через цель
+target_link_libraries(PokerCV PRIVATE ${OpenCV_LIBS})
+
+# ПРИКАЗЫВАЕМ СОБРАТЬ КОНСОЛЬНОЕ ПРИЛОЖЕНИЕ (а не GUI)
+set_target_properties(PokerCV PROPERTIES WIN32_EXECUTABLE FALSE)
+

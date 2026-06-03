@@ -45,7 +45,7 @@ public:
         m_currentBetChips += actualBet;
 
         if(m_allChips == 0){
-            m_isAllIn = true;
+            m_isAllIn = true;  
         }
         
 
