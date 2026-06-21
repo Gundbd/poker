@@ -1,3 +1,86 @@
+# Build directories
+out/
+build/
+[Bb]uild/
+cmake-build-*/
+
+# CMake / Ninja
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+Makefile
+compile_commands.json
+.ninja_deps
+.ninja_log
+build.ninja
+.cmake/
+CTestTestfile.cmake
+Testing/
+install_manifest.txt
+
+# MSVC / Visual Studio
+.vs/
+*.sln
+*.vcxproj
+*.vcxproj.filters
+*.vcxproj.user
+*.suo
+*.user
+x64/
+Debug/
+Release/
+*.dir/
+*.tlog
+*.recipe
+*.lastbuildstate
+*.ilk
+*.exp
+
+# Binaries and libs
 *.exe
-*build
-*.vscode
+*.dll
+*.obj
+*.o
+*.a
+*.pdb
+*.lib
+*.iobj
+*.ipdb
+*.so
+*.dylib
+
+# IDE
+.vscode/
+.idea/
+*.code-workspace
+.cursor/
+
+# OS junk
+Thumbs.db
+Desktop.ini
+.DS_Store
+
+# ML model weights (large — keep models/.gitkeep for folder layout)
+models/*
+!models/.gitkeep
+*.onnx
+*.pt
+*.pth
+*.weights
+
+# Python (Colab / helper scripts)
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+*.ipynb_checkpoints/
+
+# vcpkg / package manager artifacts
+vcpkg_installed/
+
+# Runtime logs
+run_*.txt
+err.txt
+out.txt
+debug-*.log
+*.log

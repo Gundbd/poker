@@ -4,8 +4,8 @@
 #include <stdexcept> 
 #include <set>
 
-#include "../Deck.hpp"
-#include "../Card.hpp"
+#include "Deck.hpp"
+#include "Card.hpp"
 
 #define ASSERT(cond, msg) \
     do { \

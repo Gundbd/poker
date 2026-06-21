@@ -94,6 +94,8 @@ void tryGame(){
 
     game.dealRiver();
 
+    drawTable(game);
+
     drawShowdown(game);
 
 }

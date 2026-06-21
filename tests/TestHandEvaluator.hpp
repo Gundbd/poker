@@ -3,9 +3,9 @@
 #include <stdexcept> 
 #include <set>
 
-#include "../Deck.hpp"
-#include "../Card.hpp"
-#include "../HandEvaluator.hpp"
+#include "Deck.hpp"
+#include "Card.hpp"
+#include "HandEvaluator.hpp"
 
 using std::vector;
 
