@@ -46,4 +46,17 @@ public:
         return m_cards.size();
     }
 
+    void removeCards(const vector<Card>& cards) {
+        for(const auto& card : cards){
+            removeCard(card);
+        }
+    }
+
+    void removeCard(const Card& card) {
+        auto it = std::find(m_cards.begin(), m_cards.end(), card);
+        if(it == m_cards.end()){
+            throw std::invalid_argument("Card not in Deck!");
+        }
+        m_cards.erase(it);
+    }
 };

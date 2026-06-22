@@ -22,8 +22,9 @@ public:
     Player(const string& name, int gameChips) : m_name(name), m_allChips(gameChips) {
         m_currentBetChips = 0;
         m_isFold = false;
+        m_isAllIn = false;
     }
-
+    
     void addCard(const Card& card) {
         if(m_holeCards.size() < 2){
             m_holeCards.push_back(card);
@@ -35,6 +36,7 @@ public:
         m_holeCards.clear();
         m_currentBetChips = 0;
         m_isFold = false;
+        m_isAllIn = false;
     }
 
 
