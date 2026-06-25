@@ -16,6 +16,16 @@ target_link_libraries(PokerCV PRIVATE
     opencv_dnn
 )
 
+add_executable(GameDetection src/game_detection.cpp)
+target_include_directories(GameDetection PRIVATE ${CMAKE_SOURCE_DIR}/include)
+target_link_libraries(GameDetection PRIVATE    
+    opencv_core
+    opencv_imgproc
+    opencv_highgui
+    opencv_videoio
+    opencv_dnn
+)
+
 add_executable(PokerConsole src/main.cpp)
 target_include_directories(PokerConsole PRIVATE
     ${CMAKE_SOURCE_DIR}/include

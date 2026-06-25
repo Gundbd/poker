@@ -42,10 +42,10 @@ public:
 
         string suitStr;
         switch(m_suit){
-            case Suit::HEARTS: suitStr = "\u2665"; break;
-            case Suit::DIAMONDS: suitStr = "\u2666"; break;
-            case Suit::CLUBS: suitStr = "\u2663"; break;
-            case Suit::SPADES: suitStr = "\u2660"; break;
+            case Suit::HEARTS: suitStr = "Hearts"; break;
+            case Suit::DIAMONDS: suitStr = "Diamonds"; break;
+            case Suit::CLUBS: suitStr = "Clubs"; break;
+            case Suit::SPADES: suitStr = "Spades"; break;
         }
 
         return rankStr + suitStr; 

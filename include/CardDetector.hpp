@@ -16,13 +16,19 @@ private:
         cv::Rect rect;
         std::string label;
     };
-
+    //сеть
     cv::dnn::Net m_net;
+    //порог доверия
     float m_confThreshold = 0.25f;
+    //порог не максимального подавления
     float m_nmsThreshold = 0.45f;
+    //размер входа
     int m_inputSize = 640;
+    //кешированные overlay
     std::vector<Overlay> m_cachedOverlays;
+    //последняя карта
     std::optional<Card> m_lastCard;
+    //последняя доверие
     float m_lastConf = 0.0f;
 
     std::vector<std::string> m_classNames = {
@@ -42,15 +48,25 @@ private:
     };
 
     static cv::Mat letterbox(const cv::Mat& src, float& scale, int& padX, int& padY, int size) {
+
+        //пример у нас входит 1920x1080, нужен size 640X640
+        //scale = min(640/1920, 640/1080) = 0.333333
         scale = std::min(size / static_cast<float>(src.cols), size / static_cast<float>(src.rows));
+        //новое значение ширины (1920 * 0.333333 = 640)
         const int newW = static_cast<int>(std::round(src.cols * scale));
+        //новое значение высоты (1080 * 0.333333 = 360)
         const int newH = static_cast<int>(std::round(src.rows * scale));
+        //отступ до центра по оси X
         padX = (size - newW) / 2;
+        //отступ до центра по оси Y
         padY = (size - newH) / 2;
 
         cv::Mat resized;
+        //изменяем размер исходного кадра
         cv::resize(src, resized, cv::Size(newW, newH));
+        //создаем новый кадр размером sizeXsize и заполняем его серым цветом
         cv::Mat out(size, size, CV_8UC3, cv::Scalar(114, 114, 114));
+        //копируем измененный кадр в новый кадр на нужном месте
         resized.copyTo(out(cv::Rect(padX, padY, newW, newH)));
         return out;
     }
@@ -59,42 +75,62 @@ private:
         int left, int top, int right, int bottom,
         float conf, int classId,
         std::vector<Card>& detectedCards) {
-
+        
+        //наблюдаем, что бы класс карты был в пределах возможного 
         if (classId < 0 || classId >= static_cast<int>(m_classNames.size())) {
             return;
         }
 
+        //заполняем m_cachedOverlays 
         const std::string label = m_classNames[classId] + " " +
             std::to_string(static_cast<int>(conf * 100)) + "%";
         m_cachedOverlays.push_back({cv::Rect(left, top, right - left, bottom - top), label});
 
+        //кладем в detected cards сдетектированную карту прогоняя через парсер
         const Card card = parseCardString(m_classNames[classId]);
         detectedCards.push_back(card);
 
+        //Добавляем в lastcard только наиболлее уверенные варианты
         if (conf >= m_lastConf) {
             m_lastConf = conf;
             m_lastCard = card;
         }
     }
-
+    //парсим результаты детекции
     void parseEnd2EndDetections(
+        //данные на выходе
         const float* outputData,
+        //количество слотов
         int numSlots,
+        //масштаб
         float scale,
+        //отступ по оси X
         int padX,
+        //отступ по оси Y
         int padY,
+        //ширина кадра
         int frameCols,
+        //высота кадра
         int frameRows,
+        //обнаруженные карты
         std::vector<Card>& detectedCards) {
 
+        //проходим по всем слотам
         for (int i = 0; i < numSlots; ++i) {
+            //получаем координаты левого верхнего угла
             const float x1 = outputData[i * 6 + 0];
+            //получаем координаты правого нижнего угла
             const float y1 = outputData[i * 6 + 1];
+            //получаем координаты правого верхнего угла
             const float x2 = outputData[i * 6 + 2];
+            //получаем координаты нижнего правого угла
             const float y2 = outputData[i * 6 + 3];
+            //получаем доверие
             const float conf = outputData[i * 6 + 4];
+            //получаем класс карты`
             const int classId = static_cast<int>(outputData[i * 6 + 5]);
 
+            //если доверие меньше порога или координаты невалидны, пропускаем
             if (conf < m_confThreshold || x2 <= x1 || y2 <= y1) {
                 continue;
             }
